@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -89,3 +90,35 @@ def top_performing_store(df, year):
     print(total_turnover.head(1))
 
     return total_turnover
+
+
+def plot_weekly_evolution(df, num_dpt):
+    """
+    * For questions 1-d and 1-e*
+    Plots the average weekly total turnover for the given department.
+
+    Note that this weekly plot is not strictly accurate since it sums up all data with the same week number,
+    but those numbers do not precisely correspond to the same weeks for each year.
+    :param df: input dataframe with turnover data
+    :param num_dpt: which department to analyze
+    """
+    weekly_data = df[df.dpt_num_department == num_dpt].groupby('week').sum().turnover
+
+    plt.plot(weekly_data)
+
+    plt.title(f'Evolution of weekly turnover data for department {num_dpt}')
+    plt.xlabel('Week')
+    plt.ylabel('Turnover')
+
+    week_to_month = df.groupby('week').mean().month.round().to_list()
+    list_loc = list()
+    list_month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                  'November', 'December']
+
+    for month in range(1, 13):
+        index = week_to_month.index(month)
+        list_loc.append(index)
+
+    plt.xticks(ticks=list_loc, labels=list_month)
+
+    plt.show()
