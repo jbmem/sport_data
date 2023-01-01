@@ -25,6 +25,8 @@ def load_archive(path, with_datetime=True):
         df['month'] = datetime.dt.month
         df['day'] = datetime.dt.day
 
+        df = add_week_column(df)
+
     return df
 
 
