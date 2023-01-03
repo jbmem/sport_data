@@ -101,7 +101,7 @@ def train_test_regressor(train_df, bu_feat):
 
     for alpha in [0., 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]:
 
-        regressor = linear_model.ElasticNet(alpha=alpha)
+        regressor = linear_model.Ridge(alpha=alpha)
         regressor.fit(x_train, y_train)
 
         print(f'Ridge regression score for alpha {alpha}: {regressor.score(x_train, y_train)}')
@@ -157,6 +157,6 @@ if __name__ == '__main__':
     train = eda.load_archive('test_data_scientist/train.csv.gz')
     bu_feat = eda.load_archive('test_data_scientist/bu_feat.csv.gz', with_datetime=False)
 
-    x_t, y_t, y_p = train_test_ensemble(train, bu_feat)
+    x_t, y_t, y_p = train_test_regressor(train, bu_feat)
 
     print()
